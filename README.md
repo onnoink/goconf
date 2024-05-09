@@ -85,7 +85,6 @@ type Server struct {
 ```go
     c := config.New(
         config.WithSource(
-            env.NewSource(""),
             file.NewSource("your config file path : examole ./configs.yaml"),
         ),
     )
