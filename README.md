@@ -86,7 +86,7 @@ type Server struct {
     c := config.New(
         config.WithSource(
             env.NewSource(""),
-            file.NewSource(flagconf),
+            file.NewSource("your config file path : examole ./configs.yaml"),
         ),
     )
 	defer c.Close()
