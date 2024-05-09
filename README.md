@@ -83,24 +83,19 @@ type Server struct {
 使用方法，目前支持文件来源，可以通过实现`Source`接口的方式定义自己的配置来源
 
 ```go
-	c := config.New(
-		config.WithSource(
-			env.NewSource(""),
-			file.NewSource(flagconf),
-		),
-	)
+    c := config.New(
+        config.WithSource(
+            env.NewSource(""),
+            file.NewSource(flagconf),
+        ),
+    )
 	defer c.Close()
-
-
     var bc conf.Bootstrap
     if err := c.Scan(&bc); err != nil {
         panic(err)
     }
 	
 	// 下面可以使用bc.Server bc.Data 获取Bootstrap下面的配置
-    
-	
-	
 ```
 
 
