@@ -2,15 +2,14 @@ package file
 
 import (
 	"context"
+	"github.com/onnoink/goconf"
 	"os"
 	"path/filepath"
 
 	"github.com/fsnotify/fsnotify"
-
-	"github.com/go-kratos/kratos/v2/config"
 )
 
-var _ config.Watcher = (*watcher)(nil)
+var _ goconf.Watcher = (*watcher)(nil)
 
 type watcher struct {
 	f  *file
@@ -20,7 +19,7 @@ type watcher struct {
 	cancel context.CancelFunc
 }
 
-func newWatcher(f *file) (config.Watcher, error) {
+func newWatcher(f *file) (goconf.Watcher, error) {
 	fw, err := fsnotify.NewWatcher()
 	if err != nil {
 		return nil, err
@@ -32,7 +31,7 @@ func newWatcher(f *file) (config.Watcher, error) {
 	return &watcher{f: f, fw: fw, ctx: ctx, cancel: cancel}, nil
 }
 
-func (w *watcher) Next() ([]*config.KeyValue, error) {
+func (w *watcher) Next() ([]*goconf.KeyValue, error) {
 	select {
 	case <-w.ctx.Done():
 		return nil, w.ctx.Err()
@@ -56,7 +55,7 @@ func (w *watcher) Next() ([]*config.KeyValue, error) {
 		if err != nil {
 			return nil, err
 		}
-		return []*config.KeyValue{kv}, nil
+		return []*goconf.KeyValue{kv}, nil
 	case err := <-w.fw.Errors:
 		return nil, err
 	}

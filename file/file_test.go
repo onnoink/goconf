@@ -2,14 +2,13 @@ package file
 
 import (
 	"errors"
+	config "github.com/onnoink/goconf"
 	"os"
 	"path/filepath"
 	"reflect"
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/go-kratos/kratos/v2/config"
 )
 
 const (
