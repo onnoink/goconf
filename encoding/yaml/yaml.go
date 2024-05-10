@@ -1,9 +1,8 @@
 package yaml
 
 import (
+	"github.com/onnoink/goconf/encoding"
 	"gopkg.in/yaml.v3"
-
-	"github.com/go-kratos/kratos/v2/encoding"
 )
 
 // Name is the name registered for the yaml codec.

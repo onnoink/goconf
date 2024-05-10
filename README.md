@@ -1,8 +1,25 @@
 # goconf
 Configuration for Go applications
 
-这是一个从`kratos`框架中迁移出来的Go应用配置模块，推荐使用`protobuf`进行应用配置的预设在，这是`krtaos`中的最佳实践,
-可以更好的约束配置文件的内容。
+## 简介
+
+这是一个从`kratos`框架中迁移出来的Go应用配置模块，关于应用内配置，程序编写者应对程序内配置的结构、类型有全面的了解，所以推荐在Go语言中通过`struct`结构体的方式对配置内容进行规范化管理。
+
+
+## 关于配置文件结构体的定义
+
+可以直接使用结构体进行配置结构的定义，例如下面的关于数据库的定义，配置结构体需要使用一个统一的外部结构体包裹，并且加上json tag
+
+```go
+
+type Database struct {
+	Driver string `json:"driver,omitempty"`
+	Source string `json:"source,omitempty"`
+}
+
+```
+
+也可以通过protobuf的形式定义配置文件结构，通过protoc输出go的相关结构体
 
 ```protobuf
 
@@ -80,7 +97,13 @@ type Server struct {
 
 ```
 
-使用方法，目前支持文件来源，可以通过实现`Source`接口的方式定义自己的配置来源
+## 使用方法目
+
+### 实现Source支持不能来源 
+goconf通过实现`Source`来支持不同的配置来源，可以支持`nacos`,`file`,`appllo`等，当前支持`file`来源，可以通过实现`Source`接口的方式定义自己的配置来源
+
+
+### Example
 
 ```go
     c := config.New(

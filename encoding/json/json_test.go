@@ -2,11 +2,10 @@ package json
 
 import (
 	"encoding/json"
+	"github.com/onnoink/goconf/encoding"
 	"reflect"
 	"strings"
 	"testing"
-
-	testData "github.com/go-kratos/kratos/v2/internal/testdata/encoding"
 )
 
 type testEmbed struct {
@@ -77,7 +76,7 @@ func TestJSON_Marshal(t *testing.T) {
 			expect: `{"a":"a","b":"b","c":"c"}`,
 		},
 		{
-			input:  &testData.TestModel{Id: 1, Name: "go-kratos", Hobby: []string{"1", "2"}},
+			input:  &encoding.TestModel{Id: 1, Name: "go-kratos", Hobby: []string{"1", "2"}},
 			expect: `{"id":"1","name":"go-kratos","hobby":["1","2"],"attrs":{}}`,
 		},
 		{
@@ -102,8 +101,8 @@ func TestJSON_Marshal(t *testing.T) {
 
 func TestJSON_Unmarshal(t *testing.T) {
 	p := testMessage{}
-	p2 := testData.TestModel{}
-	p3 := &testData.TestModel{}
+	p2 := encoding.TestModel{}
+	p3 := &encoding.TestModel{}
 	p4 := &mock{}
 	tests := []struct {
 		input  string
