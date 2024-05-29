@@ -1,16 +1,31 @@
 # goconf
-Configuration for Go applications
-
-## 简介
-
-这是一个从`kratos`框架中迁移出来的Go应用配置模块，关于应用内配置，程序编写者应对程序内配置的结构、类型有全面的了解，所以推荐在Go语言中通过`struct`结构体的方式对配置内容进行规范化管理。
 
 
-## 关于配置文件结构体的定义
+goconf 是针对Go应用程序的配置解决方案。它旨在在应用程序中工作，并且可以扩展不同类型的配置需求和格式。
 
-可以直接使用结构体进行配置结构的定义，例如下面的关于数据库的定义，配置结构体需要使用一个统一的外部结构体包裹，并且加上json tag
+## Install
+
+```shell
+go get github.com/onnoink/goconf
+```
+
+
+## 使用方式
+
+
+> tips Go应用程序开发人员应对程序内配置的结构、类型有全面的了解，所以推荐在Go语言中通过 Unmarshal 配置内容到 `struct` 结构体的方式使用和管理配置信息。
+
+
+### 定义配置结构
+
+使用结构体进行配置结构的定义，如下面的关于数据库的定义，配置结构体需要使用一个外部结构体包裹，
 
 ```go
+
+type MyGoConf struct {
+	Database Database `json:"database,omitempty"`
+}
+
 
 type Database struct {
 	Driver string `json:"driver,omitempty"`
@@ -97,27 +112,32 @@ type Server struct {
 
 ```
 
-## 使用方法目
-
-### 实现Source支持不能来源 
-goconf通过实现`Source`来支持不同的配置来源，可以支持`nacos`,`file`,`appllo`等，当前支持`file`来源，可以通过实现`Source`接口的方式定义自己的配置来源
-
+### 加载配置信息 
+goconf通过实现`Source`来支持不同的配置来源，可以支持
+* `nacos`
+* `file`
+* `appllo`等
+库中包含`file` 来源的实现，可以通过实现`Source`接口的方式实现自己的配置来源
 
 ### Example
 
 ```go
+    // 声明一个新的配置实例，并使用Option方法加载配置文件
     c := config.New(
         config.WithSource(
-            file.NewSource("your config file path : examole ./configs.yaml"),
+            file.NewSource("your config file path : example ./configs.yaml"),
         ),
     )
+	
 	defer c.Close()
+	
+	// 声明配置信息
     var bc conf.Bootstrap
+	
+	//  Unmarshal配置信息到结构体
     if err := c.Scan(&bc); err != nil {
         panic(err)
     }
-	
-	// 下面可以使用bc.Server bc.Data 获取Bootstrap下面的配置
 ```
 
 
