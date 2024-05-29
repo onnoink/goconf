@@ -113,11 +113,20 @@ type Server struct {
 ```
 
 ### 加载配置信息 
-goconf通过实现`Source`来支持不同的配置来源，可以支持
+
+可以通过实现`encoding.Codec` 接口，拓展支持不同格式的配置文件，当前支持的格式为
+ 
+* `json`
+* `xml`
+* `yaml`
+
+通过实现`Source`来支持不同的配置来源，可以支持
+
 * `nacos`
 * `file`
-* `appllo`等
-库中包含`file` 来源的实现，可以通过实现`Source`接口的方式实现自己的配置来源
+* `appllo`
+
+当前库中包含 `file` 来源的实现，可以通过实现`Source`接口的方式实现自己的配置来源
 
 ### Example
 
