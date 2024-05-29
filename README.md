@@ -122,9 +122,10 @@ type Server struct {
 
 通过实现`Source`来支持不同的配置来源，可以支持
 
-* `nacos`
-* `file`
-* `appllo`
+* [x] `file`
+* [x] `env`
+* [ ] `nacos`
+* [ ] `appllo`
 
 当前库中包含 `file` 来源的实现，可以通过实现`Source`接口的方式实现自己的配置来源
 
